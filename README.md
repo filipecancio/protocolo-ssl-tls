@@ -1,4 +1,9 @@
-## Seminario 01: Utilizando SSL em uma comunicacao server e client
+# Seminario 01: Utilizando SSL em uma comunicacao server e client
+
+## Pre requisitos
+- Instalar o JDK em sua maquina. [link](https://aws.amazon.com/pt/corretto/)
+- Instalar o Wireshark na maquina. [linux](https://www.edivaldobrito.com.br/wireshark-2-0-no-ubuntu-15-10/) / [windows e mac](https://www.wireshark.org/download.html)
+- Instalar o visual studio code na sua maquina. [link](https://code.visualstudio.com/)
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
 
