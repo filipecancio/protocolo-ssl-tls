@@ -1,13 +1,18 @@
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.KeyStore;
 
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -16,9 +21,23 @@ public class Cliente extends JFrame implements KeyListener {
     private final PrintWriter out;
 
     public Cliente() throws IOException, Exception {
-        SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        char[] passphrase = "senha senha".toCharArray();
+
+        KeyStore ks = KeyStore.getInstance("JKS");
+        ks.load(new FileInputStream("keystore.jks"), passphrase);
+
+        KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+        TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+
+        kmf.init(ks, passphrase);
+        tmf.init(ks);
+
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+
+        SSLSocketFactory factory = sslContext.getSocketFactory();
         SSLSocket socket = (SSLSocket) factory.createSocket("localhost", 5000);
-        
+
         System.out.println("Conectado ao servidor.");
 
         textArea = new JTextArea();
