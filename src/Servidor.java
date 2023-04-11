@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpsServer;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,6 +16,9 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLParameters;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import javax.net.ssl.TrustManagerFactory;
 
 public class Servidor {
@@ -37,40 +41,20 @@ public class Servidor {
         // cria um contexto SSL
         SSLContext sslContext = SSLContext.getInstance("TLS");
         sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+
+        SSLServerSocketFactory sslServerSocketFactory = sslContext.getServerSocketFactory(); //(SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+        SSLServerSocket serverSocket = (SSLServerSocket) sslServerSocketFactory.createServerSocket(5000);
         
-        // cria o servidor HTTPS
-        HttpsServer httpsServer = HttpsServer.create(new InetSocketAddress(5000), 0);
-        httpsServer.setHttpsConfigurator(new HttpsConfigurator(sslContext) {
-            public void configure(HttpsParameters params) {
-                try {
-                    // inicializa o SSL engine
-                    SSLContext context = SSLContext.getDefault();
-                    SSLEngine engine = context.createSSLEngine();
-                    engine.setNeedClientAuth(false);
-                    params.setNeedClientAuth(false);
-                    params.setCipherSuites(engine.getEnabledCipherSuites());
-                    params.setProtocols(engine.getEnabledProtocols());
-                    SSLParameters defaultSSLParameters = context.getDefaultSSLParameters();
-                    params.setSSLParameters(defaultSSLParameters);
-                } catch (Exception e) {
-                    System.err.println("Falha na inicialização do SSL engine: " + e.getMessage());
-                }
-            }
-        });
+        System.out.println("Servidor iniciado com SSL.");
 
-        // cria o manipulador HTTP
-        httpsServer.createContext("/", new HttpHandler() {
-            public void handle(HttpExchange exchange) throws IOException {
-                String response = "Olá, mundo!";
-                exchange.sendResponseHeaders(200, response.getBytes().length);
-                OutputStream os = exchange.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
-            }
-        });
+        SSLSocket clientSocket = (SSLSocket) serverSocket.accept();
+        System.out.println("Cliente conectado.");
 
-        // inicia o servidor HTTPS
-        httpsServer.start();
-        System.out.println("Servidor HTTPS iniciado.");
-    }
+        while(true){
+
+
+        Scanner scanner = new Scanner(clientSocket.getInputStream());
+        PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+        }
+}
 }
