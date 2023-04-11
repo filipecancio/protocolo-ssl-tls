@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -12,8 +15,10 @@ public class Cliente extends JFrame implements KeyListener {
     private final JTextArea textArea;
     private final PrintWriter out;
 
-    public Cliente() throws IOException {
-        Socket socket = new Socket("localhost", 5000);
+    public Cliente() throws IOException, Exception {
+        SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+        SSLSocket socket = (SSLSocket) factory.createSocket("localhost", 5000);
+        
         System.out.println("Conectado ao servidor.");
 
         textArea = new JTextArea();
@@ -48,7 +53,7 @@ public class Cliente extends JFrame implements KeyListener {
         // Não utilizado
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, Exception {
         new Cliente();
     }
 }

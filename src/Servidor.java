@@ -1,14 +1,19 @@
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.Scanner;
 
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
+
 public class Servidor {
-    public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(5000);
+    public static void main(String[] args) throws IOException, Exception {
+        
+        SSLServerSocketFactory factory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+        SSLServerSocket serverSocket = (SSLServerSocket) factory.createServerSocket(5000);
+        
         System.out.println("Servidor iniciado.");
 
-        Socket clientSocket = serverSocket.accept();
+        SSLSocket clientSocket = (SSLSocket) serverSocket.accept();
         System.out.println("Cliente conectado.");
 
         Scanner scanner = new Scanner(clientSocket.getInputStream());
