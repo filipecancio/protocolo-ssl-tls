@@ -14,32 +14,15 @@
 - Execute a classe Servidor.java
 > Para usar o codigo na versao com ssl e necessario gerar uma keystore, e colocar uma senha semelhante ao ue esta no codigo do servidor use o seguinte comando:
 
+
+**Linux**
 ```bash
-#Linux
 keytool -genkey -alias mydomain -keyalg RSA -keystore keystore.jks -keysize 2048
-
 ```
+**Windows**
 
 ```bash
-# Windows
 # ainda nao temos o codigo para windows =(
 ```
 
 - Execute a classe Cliente.java
-
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
