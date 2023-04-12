@@ -36,7 +36,7 @@ public class Cliente extends JFrame implements KeyListener {
         sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 
         SSLSocketFactory factory = sslContext.getSocketFactory();
-        SSLSocket socket = (SSLSocket) factory.createSocket("localhost", 5000);
+        SSLSocket socket = (SSLSocket) factory.createSocket("localhost", 5050);
 
         System.out.println("Conectado ao servidor.");
 

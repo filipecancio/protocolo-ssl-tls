@@ -28,7 +28,7 @@ public class Servidor {
         sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
         
         SSLServerSocketFactory factory = sslContext.getServerSocketFactory();
-        SSLServerSocket serverSocket = (SSLServerSocket) factory.createServerSocket(5000);
+        SSLServerSocket serverSocket = (SSLServerSocket) factory.createServerSocket(5050);
         
         System.out.println("Servidor iniciado.");
 
